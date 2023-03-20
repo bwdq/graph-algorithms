@@ -5,12 +5,14 @@
 "name": "A",
 "edges": [
 {
-"name": "C",
-"weight": 2
+"name": "B",
+"color": true,
+"weight": 1
 },
 {
-"name": "B",
-"weight": 1
+"name": "C",
+"color": true,
+"weight": 2
 }
 ]
 },{
@@ -19,6 +21,7 @@
 "edges": [
 {
 "name": "D",
+"color": true,
 "weight": 3
 }
 ]
@@ -28,6 +31,7 @@
 "edges": [
 {
 "name": "D",
+"color": false,
 "weight": 4
 }
 ]
@@ -37,6 +41,7 @@
 "edges": [
 {
 "name": "E",
+"color": true,
 "weight": 5
 }
 ]
@@ -46,6 +51,7 @@
 "edges": [
 {
 "name": "F",
+"color": true,
 "weight": 6
 }
 ]
@@ -55,6 +61,7 @@
 "edges": [
 {
 "name": "A",
+"color": false,
 "weight": 7
 }
 ]

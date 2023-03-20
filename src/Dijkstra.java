@@ -1,49 +1,57 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.PriorityQueue;
+
+import java.util.*;
 
 public class Dijkstra {
+        public void computePaths(Vertex rootVertex) {
+            //set distance to root vertex to 0
+            rootVertex.setMinDistance(0);
+            //add root vertex to priority queue
+            PriorityQueue<Vertex> priorityQueue = new PriorityQueue<>();
+            priorityQueue.add(rootVertex);
 
-    public static Graph dijkstra(UndirectedGraph graph, Vertex from, Vertex to) {
-
-        HashMap<Vertex, Integer> distances = new HashMap<Vertex, Integer>();
-        HashMap<Vertex, Vertex> previous = new HashMap<Vertex, Vertex>();
-        HashSet<Vertex> queue = new HashSet<Vertex>();
-        //set initial distances to infinity
-        for (Vertex vertex : graph.getVertices()) {
-            distances.put(vertex, Integer.MAX_VALUE);
-            previous.put(vertex, null);
-        }
-        //add all vertices to queue
-        queue.addAll(graph.getVertices());
-        //set initial distance to start to 0
-        distances.put(from, 0);
-        queue.remove(from);
-        //while queue is not empty
-        while (!queue.isEmpty()) {
-            //get vertex with smallest distance
-            Vertex vertex = queue.iterator().next();
-            queue.remove(vertex);
-            //for each edge
-            for (Vertex neighbor : vertex.getEdges().keySet()) {
-                //get distance to neighbor
-                int distance = distances.get(vertex) + vertex.getEdges().get(neighbor);
-                //if distance is smaller than current distance
-                if (distance < distances.get(neighbor)) {
-                    //update distance
-                    distances.put(neighbor, distance);
-                    //update previous
-                    previous.put(neighbor, vertex);
-                    //remove neighbor from queue
-                    queue.remove(neighbor);
-                    //add neighbor to queue
-                    queue.add(neighbor);
+            //visit all vertices
+            while (!priorityQueue.isEmpty()) {
+                //visit vertex with smallest distance
+                Vertex vertex = priorityQueue.poll();
+                //visit all edges connected to vertex
+                for (Edge edge : vertex.getEdges()) {
+                    Vertex edgeVertex = edge.getTo();
+                    int weight = edge.getWeight();
+                    int minDistance = vertex.getMinDistance() + weight;
+                    //if new distance is smaller than current distance, update distance and set previous vertex
+                    if (minDistance < edgeVertex.getMinDistance()) {
+                        priorityQueue.remove(vertex);
+                        edgeVertex.setPreviousVertex(vertex);
+                        edgeVertex.setMinDistance(minDistance);
+                        priorityQueue.add(edgeVertex);
+                    }
                 }
             }
         }
 
-        
-        return graph;
-    }
+        public void colorPaths(UndirectedGraph graph, Vertex root) {
+            for (Vertex vertex : graph.getVertices()) {
+                if (vertex != root) {
+                    for (Vertex newVertex = vertex; newVertex != null; newVertex = newVertex.getPreviousVertex()) {
+                        //color vertex
+                        if (newVertex.getPreviousVertex() != null) {
+                            graph.getEdge(newVertex.getPreviousVertex(), newVertex).colored = true;
+                        }
+                    }
+                }
+            }
+            System.out.println('d');
+        }
+
+        public List<Vertex> getShortestPathTo(Vertex targetVertex) {//C
+            List<Vertex> path = new ArrayList<>();
+
+            for (Vertex vertex = targetVertex; vertex != null; vertex = vertex.getPreviousVertex()) {
+                path.add(vertex);
+            }
+
+            Collections.reverse(path);
+            return path;
+        }
     
 }

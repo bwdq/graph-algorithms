@@ -1,35 +1,48 @@
-import java.util.HashMap;
 
-public class Vertex {
+import java.util.ArrayList;
+
+public class Vertex implements Comparable<Vertex>{
 
     private String name;
-    private HashMap<Vertex, Integer> edges;
-    private HashMap<Vertex, Boolean> colored;
+    private ArrayList<Edge> edges;
+    private Vertex previosVertex;
+    private int minDistance = Integer.MAX_VALUE;
 
     public Vertex(String name) {
         this.name = name;
-        this.edges = new HashMap<Vertex, Integer>();
-        this.colored = new HashMap<Vertex, Boolean>();
+        this.edges = new ArrayList<Edge>();
     }
 
-    public String getName() {
+
+    public void addEdge(Edge edge) {
+        this.edges.add(edge);
+    }
+    
+    public ArrayList<Edge> getEdges() {
+        return edges;
+    }
+    public Vertex getPreviousVertex() {
+        return previosVertex;
+    }
+
+    public void setPreviousVertex(Vertex previosVertex) {
+        this.previosVertex = previosVertex;
+    }
+
+    public int getMinDistance() {
+        return minDistance;
+    }
+
+    public void setMinDistance(int minDistance) {
+        this.minDistance = minDistance;
+    }
+    @Override
+    public String toString() {
         return name;
     }
 
-    public void addEdge(Vertex vertex, int weight) {
-        edges.put(vertex, weight);
-        colored.put(vertex, false);
-    }
-    
-    public HashMap<Vertex, Integer> getEdges() {
-        return edges;
-    }
-
-    public void color(Vertex vertex) {
-        colored.put(vertex, true);
-    }
-
-    public boolean getColor(Vertex vertex) {
-        return colored.get(vertex);
+    @Override
+    public int compareTo(Vertex otherVertex) {
+        return Double.compare(this.minDistance, otherVertex.minDistance);
     }
 }

@@ -8,10 +8,13 @@ import java.util.HashMap;
 public class UndirectedGraph implements Graph {
 
     private HashMap<String, Vertex> vertices;
-
+    private HashMap<String, Edge> toList;
+    private HashMap<String, Edge> fromList;
 
     public UndirectedGraph() {
         vertices = new HashMap<String, Vertex>();
+        toList = new HashMap<String, Edge>();
+        fromList = new HashMap<String, Edge>();
     }
 
 
@@ -29,7 +32,25 @@ public class UndirectedGraph implements Graph {
 
     @Override
     public void addEdge(Vertex from, Vertex to, int weight) {
-        from.addEdge(to, weight);
+        Edge edge = new Edge(weight, from, to);
+        from.addEdge(edge);
+        //to.addEdge(new Edge(weight, to, from));
+        toList.put(to.toString() + from, edge);
+        fromList.put(from.toString() + to, edge);
+
+    }
+
+    public Edge getEdge(Vertex from, Vertex to) {
+        Edge edge = toList.get(from.toString() + to);
+        if (edge == null) {
+            edge = fromList.get(from.toString() + to);
+        }
+        return edge;
+    }
+
+    public void addEdge(String to, String from, int weight) {
+        Edge edge = new Edge(weight, getVertex(from), getVertex(to));
+        getVertex(from).addEdge(edge);
     }
 
     public ArrayList<Vertex> getVertices() {
@@ -51,6 +72,7 @@ public class UndirectedGraph implements Graph {
     public Vertex getVertex(String name) {
         return vertices.get(name);
     }
+
 
     public void outputGraphToFile(String filename) {
 
@@ -76,12 +98,13 @@ public class UndirectedGraph implements Graph {
 
         for (Vertex v : vertices.values()) {
             output+="{\n";
-            output+="\n\"name\": \"" + v.getName() + "\",";
+            output+="\n\"name\": \"" + v + "\",";
             output+="\n\"edges\": [\n";
-            for (Vertex e : v.getEdges().keySet()) {
+            for (Edge e : v.getEdges()) {
                 output+="{\n";
-                output+="\"name\": \"" + e.getName() + "\",";
-                output+="\n\"weight\": " + v.getEdges().get(e);
+                output+="\"name\": \"" + e.getTo() + "\",";
+                output+="\n\"color\": " + e.colored + ",";
+                output+="\n\"weight\": " + e.getWeight();
                 output+="\n},\n";
             }
             output = output.substring(0, output.length() - 2);
@@ -105,4 +128,5 @@ public class UndirectedGraph implements Graph {
             throw new RuntimeException(e);
         }
     }
+
 }
