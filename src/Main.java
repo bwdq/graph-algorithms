@@ -3,7 +3,7 @@
 public class Main {
     public static void main(String[] args) {
 
-        UndirectedGraph dijkstraGraph = ExampleGraph.getExampleDirected();
+        UndirectedGraph dijkstraGraph = ExampleGraph.getExampleDirected2();
         //Dijkstra.dijkstra(dijkstra, dijkstra.getVertex("A"), dijkstra.getVertex("D"));
 
         Dijkstra dijkstra = new Dijkstra();
