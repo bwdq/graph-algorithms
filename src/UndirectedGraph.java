@@ -5,12 +5,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Implementation of an undirected graph, WIP
+ */
 public class UndirectedGraph implements Graph {
 
     private HashMap<String, Vertex> vertices;
     private HashMap<String, Edge> toList;
     private HashMap<String, Edge> fromList;
 
+    /**
+     * Constructor for UndirectedGraph
+     */
     public UndirectedGraph() {
         vertices = new HashMap<String, Vertex>();
         toList = new HashMap<String, Edge>();
@@ -20,7 +26,6 @@ public class UndirectedGraph implements Graph {
 
     /**
      * Adds a vertex to the graph.
-     *
      * @param name the name of the vertex
      */
     @Override
@@ -30,6 +35,12 @@ public class UndirectedGraph implements Graph {
         }
     }
 
+    /**
+     * Adds an edge to the graph.
+     * @param from the from vertex
+     * @param to the to vertex
+     * @param weight the weight of the edge
+     */
     @Override
     public void addEdge(Vertex from, Vertex to, int weight) {
         Edge edge = new Edge(weight, from, to);
@@ -40,6 +51,12 @@ public class UndirectedGraph implements Graph {
 
     }
 
+    /**
+     * Returns the edge between two vertices
+     * @param from the from vertex
+     * @param to the to vertex
+     * @return the edge between the two vertices
+     */
     public Edge getEdge(Vertex from, Vertex to) {
         Edge edge = toList.get(from.toString() + to);
         if (edge == null) {
@@ -48,11 +65,21 @@ public class UndirectedGraph implements Graph {
         return edge;
     }
 
+    /**
+     * Adds an edge to the graph between two vertices with the given weight
+     * @param to the to vertex
+     * @param from the from vertex
+     * @param weight the weight of the edge
+     */
     public void addEdge(String to, String from, int weight) {
         Edge edge = new Edge(weight, getVertex(from), getVertex(to));
         getVertex(from).addEdge(edge);
     }
 
+    /**
+     * Returns a list of all the vertices in the graph.
+     * @return a list of all the vertices in the graph
+     */
     public ArrayList<Vertex> getVertices() {
         ArrayList<Vertex> vertices = new ArrayList<Vertex>();
         for (Vertex v : this.vertices.values()) {
@@ -61,10 +88,8 @@ public class UndirectedGraph implements Graph {
         return vertices;
     }
 
-
     /**
      * Returns the vertex with the given name.
-     *
      * @param name the name of the vertex
      * @return the vertex with the given name
      */
@@ -73,7 +98,10 @@ public class UndirectedGraph implements Graph {
         return vertices.get(name);
     }
 
-
+    /**
+     * A really bad JSON serializer.
+     * @param filename the name of the file to write to
+     */
     public void outputGraphToFile(String filename) {
 
         //java write to file
@@ -82,9 +110,6 @@ public class UndirectedGraph implements Graph {
         if (file.exists()) {
             file.delete();
         }
-        //ouput to file
-        //format is: list of vertices []
-        //edge verex weight
         String output = "";
 
         FileWriter fw = null;
@@ -94,12 +119,14 @@ public class UndirectedGraph implements Graph {
             throw new RuntimeException(e);
         }
         BufferedWriter bw = new BufferedWriter(fw);
+        //JSON header
         output+="{\n\"vertices\": [\n";
-
+        //for each vertex
         for (Vertex v : vertices.values()) {
             output+="{\n";
             output+="\n\"name\": \"" + v + "\",";
             output+="\n\"edges\": [\n";
+            //for each edge
             for (Edge e : v.getEdges()) {
                 output+="{\n";
                 output+="\"name\": \"" + e.getTo() + "\",";
@@ -112,6 +139,7 @@ public class UndirectedGraph implements Graph {
         }
         output = output.substring(0, output.length() - 1);
         output+="\n]\n}";
+        //Java error handling garbage
         try {
             bw.write(output);
         } catch (IOException e) {

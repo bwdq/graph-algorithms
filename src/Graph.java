@@ -1,5 +1,7 @@
+/**
+ * A graph interface, ideally I would add more to this.
+ */
 public interface Graph {
-
 
     /**
      * Adds a vertex to the graph.

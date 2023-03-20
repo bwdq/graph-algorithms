@@ -1,6 +1,12 @@
+/**
+ * Example graphs for testing
+ */
 public class ExampleGraph {
-    
 
+    /**
+     * Example graph I made up
+     * @return graph
+     */
     public static UndirectedGraph getExampleDirected() {
 
         UndirectedGraph graph = new UndirectedGraph();
@@ -24,6 +30,10 @@ public class ExampleGraph {
         return graph;
     }
 
+    /**
+     * Example graph from Assignment
+     * @return graph
+     */
     public static UndirectedGraph getExampleDirected2() {
         UndirectedGraph graph = new UndirectedGraph();
         //example vertices
@@ -35,23 +45,8 @@ public class ExampleGraph {
         graph.addVertex("F");
         graph.addVertex("G");
         graph.addVertex("H");
-        //example edges
-//        graph.addEdge(graph.getVertex("A"), graph.getVertex("D"), 9);
-//        graph.addEdge(graph.getVertex("A"), graph.getVertex("E"), 5);
-//
-//        graph.addEdge(graph.getVertex("B"), graph.getVertex("C"), 1);
-//        graph.addEdge(graph.getVertex("B"), graph.getVertex("D"), 5);
-//        graph.addEdge(graph.getVertex("B"), graph.getVertex("F"), 9);
-//        graph.addEdge(graph.getVertex("B"), graph.getVertex("G"), 8);
-//
-//
-//        graph.addEdge(graph.getVertex("C"), graph.getVertex("E"), 9);
-//        graph.addEdge(graph.getVertex("C"), graph.getVertex("G"), 6);
-//
-//
-//        graph.addEdge(graph.getVertex("D"), graph.getVertex("F"), 3);
-//
-//        graph.addEdge(graph.getVertex("G"), graph.getVertex("H"), 8);
+
+        //example edges, turns out it requires them in both directions
         graph.addEdge(graph.getVertex("A"), graph.getVertex("D"), 9);
         graph.addEdge(graph.getVertex("A"), graph.getVertex("E"), 5);
 
