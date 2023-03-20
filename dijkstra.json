@@ -1,0 +1,63 @@
+{
+"vertices": [
+{
+
+"name": "A",
+"edges": [
+{
+"name": "C",
+"weight": 2
+},
+{
+"name": "B",
+"weight": 1
+}
+]
+},{
+
+"name": "B",
+"edges": [
+{
+"name": "D",
+"weight": 3
+}
+]
+},{
+
+"name": "C",
+"edges": [
+{
+"name": "D",
+"weight": 4
+}
+]
+},{
+
+"name": "D",
+"edges": [
+{
+"name": "E",
+"weight": 5
+}
+]
+},{
+
+"name": "E",
+"edges": [
+{
+"name": "F",
+"weight": 6
+}
+]
+},{
+
+"name": "F",
+"edges": [
+{
+"name": "A",
+"weight": 7
+}
+]
+}
+]
+}
